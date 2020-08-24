@@ -4,8 +4,8 @@ local attendanceEnabled = false
 
 bosses = {
   ["Ruins of Ahn'Qiraj"]={ "Moam", "General Rajaxx", "Kurinnaxx", "Ayamiss the Hunter", "Buru the Gorger", "Ossirian the Unscarred" },
-  ["Temple of Ahn'Qiraj"]={ "The Prophhet Skeram", "Battleguard Sartura", "Fankriss the Unyielding", "Lord Kri", "Viscidus", "Emperor Vek'nilash", "Ouro", "C'thun" , "Princess Huhuran" },
-  ["Ahn'Qiraj"]={ "The Prophhet Skeram", "Battleguard Sartura", "Fankriss the Unyielding", "Lord Kri", "Viscidus", "Emperor Vek'nilash", "Ouro", "C'thun" , "Princess Huhuran" },
+  ["Temple of Ahn'Qiraj"]={ "The Prophet Skeram", "Battleguard Sartura", "Fankriss the Unyielding", "Vem", "Viscidus", "Emperor Vek'nilash", "Ouro", "C'thun" , "Princess Huhuran" },
+  ["Ahn'Qiraj"]={ "The Prophet Skeram", "Battleguard Sartura", "Fankriss the Unyielding", "Vem", "Viscidus", "Emperor Vek'nilash", "Ouro", "C'thun" , "Princess Huhuran" },
   ["Blackwing Lair"]={ "Razorgore the Untamed", "Vaelastrasz the Corrupt", "Broodlord Lashlayer", "Firemaw", "Flamegor", "Ebonroc", "Chromaggus", "Nefarian" },
   ["Molten Core"]={ "Lucifron", "Magmadar", "Gehennas", "Garr", "Baron Geddon", "Shazzrah", "Sulfuron Harbinger", "Golemagg the Incinerator", "Majordomo Executus", "Ragnaros" },
   ["Onyxia's Lair"]={ "Onyxia" },
