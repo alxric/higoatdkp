@@ -5,7 +5,10 @@ frame:RegisterEvent("GROUP_FORMED");
 frame:RegisterEvent("GROUP_ROSTER_UPDATE");
 
 frame:SetScript("OnEvent",function(self,event,msg,author)
-    if event=="GROUP_FORMED" and UnitIsGroupLeader("unit") then
+  if not UnitIsGroupLeader("unit") then
+    return
+  end
+    if event=="GROUP_FORMED" then
       if not IsInRaid() then
         ConvertToRaid();
         ns.an.inviteGuild();
