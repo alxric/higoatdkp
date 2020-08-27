@@ -5,7 +5,8 @@ frame:RegisterEvent("GROUP_FORMED");
 frame:RegisterEvent("GROUP_ROSTER_UPDATE");
 
 frame:SetScript("OnEvent",function(self,event,msg,author)
-  if not UnitIsGroupLeader("unit") then
+  addon = ns.an.addon
+  if not UnitIsGroupLeader("player") or addon.db.profile.guildInvites ~= true then
     return
   end
     if event=="GROUP_FORMED" then
@@ -32,7 +33,7 @@ frame:SetScript("OnEvent",function(self,event,msg,author)
           return
         end
         guildName, guildRankName, guildRankIndex = GetGuildInfo(name);
-        if rank < 1 and (guildRankName == "Officer" or guildRankName == "Officer alt") then
+        if rank < 1 and UnitIsGroupLeader("player") and (guildRankName == "Officer" or guildRankName == "Officer alt") then
           PromoteToAssistant(name);
         end
       end
