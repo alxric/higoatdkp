@@ -2,9 +2,10 @@ local an, ns = ...
 
 local function IsAllowedOnAttendanceSets(player)
   local numTotal = (GetNumGroupMembers());
+  local realmName = GetRealmName()
   for i=1,numTotal do
     name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i);
-    if name == player:gsub("%-TenStorms", "") then
+    if name == player:gsub("%-".. realmName, "") then
       return false
     end
   end
@@ -43,23 +44,24 @@ local function handleDKP(reply, addon, player)
   if not addon.attendanceEnabled then
     reply = ns.an.L["<HGDKP>: There are no active attendance calls open right now"]
   else 
+    local realmName = GetRealmName()
     if not IsAllowedOnAttendanceSets(player) then
-      reply = ns.an.L["<HGDKP>: %q can't be added to this attendance set."]:format(player:gsub("%-TenStorms", ""))
+      reply = ns.an.L["<HGDKP>: %q can't be added to this attendance set."]:format(player:gsub("%-" .. realmName, ""))
     else
       local raidId = addon.currentRaid
       local bossName = addon.currentBoss
       local attendance = addon.db.profile.raids[raidId]["bosskills"][bossName].attendance
       local inRaid = false
       for k, v in pairs(attendance) do
-        if v == player:gsub("%-TenStorms", "") then
+        if v == player:gsub("%-" .. realmName, "") then
           inRaid = true
         end
       end
       if inRaid == true then
-        reply = ns.an.L["<HGDKP>: %q has already been added to the attendance list"]:format(player:gsub("%-TenStorms", ""))
+        reply = ns.an.L["<HGDKP>: %q has already been added to the attendance list"]:format(player:gsub("%-" .. realmName, ""))
       else 
-        reply = ns.an.L["<HGDKP>: %q has been added to the attendance list"]:format(player:gsub("%-TenStorms", ""))
-        attendance[#attendance+1] =  player:gsub("%-TenStorms", "")
+        reply = ns.an.L["<HGDKP>: %q has been added to the attendance list"]:format(player:gsub("%-" .. realmName, ""))
+        attendance[#attendance+1] =  player:gsub("%-" .. realmName, "")
         addon.db.profile.raids[raidId]["bosskills"][bossName]["attendance"] = attendance
       end
     end

@@ -1,7 +1,6 @@
 local an, ns = ...
 
 watched_zones = {
-  "Dun Morogh",
   "Ruins of Ahn'Qiraj",
   "Temple of Ahn'Qiraj",
   "Ahn'Qiraj",

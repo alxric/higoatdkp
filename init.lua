@@ -105,6 +105,11 @@ local function startInvites()
   addon.db.profile.guildInvites = true
   ns.an.sendGuildMessage(inviteMessage)
   ns.an.inviteGuild();
+  for k, v in pairs(ns.an.guildMemberList) do
+    if k == player then
+      return true
+    end
+  end
 end
 
 -- Initialization

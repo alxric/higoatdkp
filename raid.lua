@@ -9,35 +9,38 @@ frame:SetScript("OnEvent",function(self,event,msg,author)
   if not UnitIsGroupLeader("player") or addon.db.profile.guildInvites ~= true then
     return
   end
-    if event=="GROUP_FORMED" then
-      if not IsInRaid() then
-        ConvertToRaid();
-        ns.an.inviteGuild();
+  if event=="GROUP_FORMED" then
+    if not IsInRaid() then
+      ConvertToRaid();
+      ns.an.inviteGuild();
+    end
+    if lootmethod ~= "master" then
+      SetLootMethod("master", GetUnitName("player"));
+    end
+    if GetLootThreshold() ~= 4 then
+      hg__wait(2, lootThresholdDelay);
+    end
+  end
+  if event=="GROUP_ROSTER_UPDATE" then
+    local numTotal = (GetNumGroupMembers());
+    local realmName = GetRealmName()
+    if numTotal > 1 and not IsInRaid() then
+      ConvertToRaid()
+      ns.an.inviteGuild();
+    end
+    for i=1,numTotal do
+      name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i);
+      if name == nil then
+        return
       end
-      if lootmethod ~= "master" then
-        SetLootMethod("master", GetUnitName("player"));
-      end
-      if GetLootThreshold() ~= 4 then
-        hg__wait(2, lootThresholdDelay);
+      local playerName = name .. "-" .. realmName
+      local rankName = ns.an.memberRanks[playerName]
+      guildName, guildRankName, guildRankIndex = GetGuildInfo(playerName)
+      if rank < 1 and UnitIsGroupLeader("player") and (rankName == "Officer" or rankName == "Officer alt") then
+        PromoteToAssistant(name);
       end
     end
-    if event=="GROUP_ROSTER_UPDATE" then
-      local numTotal = (GetNumGroupMembers());
-      if numTotal > 1 and not IsInRaid() then
-        ConvertToRaid()
-        ns.an.inviteGuild();
-      end
-      for i=1,numTotal do
-        name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i);
-        if name == nil then
-          return
-        end
-        guildName, guildRankName, guildRankIndex = GetGuildInfo(name);
-        if rank < 1 and UnitIsGroupLeader("player") and (guildRankName == "Officer" or guildRankName == "Officer alt") then
-          PromoteToAssistant(name);
-        end
-      end
-    end
+  end
 end);
 
 local waitTable = {};
